@@ -21,5 +21,17 @@ public:
 	Node* getPreviousNode() {
 		return prev;
 	}
-
+	string getPath() {
+		string path = "";
+		
+		if (prev != nullptr)
+		{
+			path = path + "/" + name;
+			return prev->getPath() + path;
+		}
+		else
+		{
+			return name;
+		}
+	}
 };
