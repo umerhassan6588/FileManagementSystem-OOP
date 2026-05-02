@@ -9,7 +9,28 @@ public:
 	CommandManager(Folder* rootFolder) {
 		currentFolder = rootFolder;
 	}
-	searchHelper(Node* node, string name)
+	void searchHelper(Node* node, string name) {
+		Folder* isFolder = dynamic_cast<Folder*>(node);
+		if (isFolder == nullptr)
+		{
+			if (name == node->getName())
+			{
+				cout << node->getPath() << endl;
+			}
+		}
+		else
+		{
+			if (name == isFolder->getName)
+			{
+				isFolder->getPath();
+			}
+			Node** mylist = isFolder->getList();
+			for (int i = 0; i < isFolder->getCount(); i++)
+			{
+				searchHelper(mylist[i], name);
+			}
+		}
+	}
 
 
 
@@ -60,18 +81,7 @@ public:
 		Node** mylist = currentFolder->getList();
 		for (int i = 0; i < currentFolder->getCount(); i++)
 		{
-			Folder* temp = dynamic_cast<Folder*>mylist[i];
-			if (temp == nullptr)
-			{
-				if (name == mylist[i]->getName())
-				{
-					cout << mylist[i]->getPath() << endl;
-				}
-			}
-			else
-			{
-
-			}
+			searchHelper(mylist[i], name);
 		}
 	}
 
