@@ -47,7 +47,20 @@ public:
 			cout << "not found" << endl;
 		}
 	}
+	search(string name){ 
+		Node** mylist = currentFolder->getList();
+		for (int i = 0; i < currentFolder->getCount(); i++)
+		{
+			Folder* temp = dynamic_cast<Folder*>mylist[i];
+			if (temp == nullptr)
+			{
+				if (name == mylist[i]->getName())
+				{
 
+				}
+			}
+		}
+	}
 private:
 
 };
