@@ -2,6 +2,7 @@
 using namespace std;
 class Node
 {
+protected:
 	string name;
 	Node* prev;
 public:
