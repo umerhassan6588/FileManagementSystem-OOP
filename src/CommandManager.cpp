@@ -12,7 +12,10 @@ public:
 			cout << "Name: " << mylist[i]->getName() << " | Type: " << mylist[i]->getType() << " | Size: " << mylist[i]->getSize() << endl;
 		}
 	}
-
+	void mkdir() {
+		Folder* newFolder = new Folder(name, currentFolder);
+		currentFolder->addNode(newFolder);
+	}
 private:
 
 };
