@@ -33,4 +33,7 @@ public:
 			return name;
 		}
 	}
+	string setName(string newname){
+		name = newname;
+	}
 };

@@ -20,9 +20,9 @@ public:
 		}
 		else
 		{
-			if (name == isFolder->getName)
+			if (name == isFolder->getName())
 			{
-				isFolder->getPath();
+				cout << isFolder->getPath() << endl;
 			}
 			Node** mylist = isFolder->getList();
 			for (int i = 0; i < isFolder->getCount(); i++)
@@ -84,6 +84,35 @@ public:
 			searchHelper(mylist[i], name);
 		}
 	}
+	void rm(string name) {
+		Node** mylist = currentFolder->getList();
+		for (int i = 0; i < currentFolder->getCount(); i++)
+		{
+			if (name == mylist[i]->getName())
+			{
+				currentFolder->removeNode(mylist[i]);
+				delete mylist[i];
+					break;
+			}
+			else
+			{
+				cout << "Not found";
+			}
+		}
+	}
+	void rename(string name,string newname) {
+		Node** mylist = currentFolder->getList();
+		for (int i = 0; i < currentFolder->getCount(); i++)
+		{
+			if (oldname == mylist[i]->getName())
+			{
+				mylist[i] ->setName(newname);
+			}
+			else
+			{
+				cout << "Not found";
+			}
+		}
 
-
+	}
 };

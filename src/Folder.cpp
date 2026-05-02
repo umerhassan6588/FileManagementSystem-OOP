@@ -54,5 +54,20 @@ public:
 		list = temp;
 		count++;
 	}
+	void removeNode(Node* oldnode) {
+		Node** temp = new Node * [count - 1];
+		int j = 0;
+		for (int i = 0; i < count; i++)
+		{
+			if (list[i] != oldnode) {
+				temp[j] = list[i];
+				j++;
+			}
+		}
+		
+		delete[] list;
+		list = temp;
+		count--;
+	}
 };
 
