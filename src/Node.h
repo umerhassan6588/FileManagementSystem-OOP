@@ -2,6 +2,7 @@
 using namespace std;
 class Node
 {
+protected:
 	string name;
 	Node* prev;
 public:
@@ -13,8 +14,6 @@ public:
 	virtual void create() = 0;
 	virtual void remove() = 0;
 	virtual ~Node() {}
-	virtual int getSize() = 0;
-	virtual string getType() = 0;
 	string getName() {
 		return name;
 	}

@@ -1,3 +1,7 @@
+#include "node.h"
+#include <iostream>
+using namespace std;
+
 class Folder : public Node
 {
 protected:
