@@ -86,33 +86,118 @@ public:
 	}
 	void rm(string name) {
 		Node** mylist = currentFolder->getList();
+		bool found = false;
 		for (int i = 0; i < currentFolder->getCount(); i++)
 		{
 			if (name == mylist[i]->getName())
 			{
 				currentFolder->removeNode(mylist[i]);
 				delete mylist[i];
-					break;
+				found = true;
+				break;
 			}
 			else
 			{
-				cout << "Not found";
+				bool found = false;
 			}
+		}
+		if (found ==false)
+		{
+			cout << "not found"
 		}
 	}
 	void rename(string name,string newname) {
 		Node** mylist = currentFolder->getList();
+		bool found = false;
 		for (int i = 0; i < currentFolder->getCount(); i++)
 		{
-			if (oldname == mylist[i]->getName())
+			if (name == mylist[i]->getName())
 			{
 				mylist[i] ->setName(newname);
+				found = true;
+				break;
 			}
 			else
 			{
-				cout << "Not found";
+				found = false;
 			}
 		}
-
+		if (found == false)
+		{
+			cout << "not found"
+		}
 	}
+	
+
+	void run() {
+		int option;
+		while (true)
+		{
+			cout << "1. ls" << endl;
+			cout << "2. mkdir" << endl;
+			cout << "3. cd" << endl;
+			cout << "4. search" << endl;
+			cout << "5. rm" << endl;
+			cout << "6. rename" << endl;
+			cout << "7. touch" << endl;
+			cout << "8. exit" << endl;
+			cout << "enter the command you want to run press,1-8: " << endl;
+			cin >> option;
+			while (cin.fail() || (option >8 || option <1)
+			{
+				cin.ignore();
+				cin.clear(1000);
+				cout << "option must be between 1-8.RE-ENTER: " << endl;
+				cin >> option;
+			}
+			switch (option)
+			{
+			case:1{
+				ls();
+			}
+			case:2{
+				mkdir();
+			}
+			case:3{
+				string name;
+				cout << "enter the name:";
+				getline(cin, name);
+				cd(name);
+			}
+			case:4{
+				string name;
+				cout << "enter the name of the node to search:";
+				getline(cin, name);
+				search(name);
+			}
+			case:5{
+				string name;
+				cout << "enter the name of the node to delete:";
+				getline(cin, name);
+				rm(name);
+			}
+			case:6{
+				string name;
+				string newname;
+				cout << "enter the name to change:";
+				getline(cin, name);
+				cin.clear(100);
+				cout << "enter the new name:";
+				getline(cin, newname);
+				rm(name,newname);
+			}
+			case:7{
+				//touch for files.
+			}
+			case:8{
+				cout << "program exitted";
+			}
+				
+			default:
+				break;
+			}
+		}
+	}
+
+
 };
