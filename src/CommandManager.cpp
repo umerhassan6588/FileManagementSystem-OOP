@@ -5,6 +5,11 @@ public:
 	CommandManager(Folder* rootFolder) {
 		currentFolder = rootFolder;
 	}
+	searchHelper(Node* node, string name)
+
+
+
+
 	void ls() {
 		Node** mylist = currentFolder->getList();
 		for (int i = 0; i < currentFolder->getCount(); i++)
@@ -56,11 +61,15 @@ public:
 			{
 				if (name == mylist[i]->getName())
 				{
-
+					cout << mylist[i]->getPath() << endl;
 				}
+			}
+			else
+			{
+
 			}
 		}
 	}
-private:
+
 
 };
