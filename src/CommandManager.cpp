@@ -1,3 +1,7 @@
+#include "Folder.cpp"
+#include <iostream>
+using namespace std;
+
 class CommandManager
 {
 	Folder* currentFolder;
