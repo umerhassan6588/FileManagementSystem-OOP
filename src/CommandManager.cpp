@@ -132,7 +132,7 @@ public:
 	
 
 	void run() {
-		int option;
+		string option;
 		while (true)
 		{
 			cout << "1. ls" << endl;
@@ -143,50 +143,47 @@ public:
 			cout << "6. rename" << endl;
 			cout << "7. touch" << endl;
 			cout << "8. exit" << endl;
-			cout << "enter the command you want to run press,1-8: " << endl;
+			cout << "enter the command you want to run: " << endl;
 			cin >> option;
-			while (cin.fail() || (option > 8 || option < 1))
+			if (option == "ls")
 			{
-				cin.ignore();
-				cin.clear(1000);
-				cout << "option must be between 1-8.RE-ENTER: " << endl;
-				cin >> option;
-			}
-			switch (option)
-			{
-			case 1: {
 				ls();
 				break;
-			 }
-			case 2: {
+			}
+			else if(option == "mkdir")
+			{
 				string name;
 				cout << "enter the name:";
 				getline(cin, name);
 				mkdir(name);
 				break;
-			 }
-			case 3: {
+			}
+			else if (option == "cd")
+			{
 				string name;
 				cout << "enter the name:";
 				getline(cin, name);
 				cd(name);
 				break;
-			 }
-			case 4: {
+			}
+			else if (option == "search")
+			{
 				string name;
 				cout << "enter the name of the node to search:";
 				getline(cin, name);
 				search(name);
 				break;
-			 }
-			case 5: {
+			}
+			else if (option == "rm")
+			{
 				string name;
 				cout << "enter the name of the node to delete:";
 				getline(cin, name);
 				rm(name);
 				break;
-			 }
-			case 6:{
+			}
+			else if (option == "rename")
+			{
 				string name;
 				string newname;
 				cout << "enter the name to change:";
@@ -196,18 +193,21 @@ public:
 				getline(cin, newname);
 				rename(name, newname);
 				break;
-			 }
-			case 7: {
-				//touch for files.
 			}
-			case 8:{
-				cout << "program exitted";
-			}
+			else if (option == "touch")
+			{
 
-			default:
+			}
+			else if(option == "exit")
+			{
+				cout << "exitted succefully" << endl;
 				break;
 			}
-		
+			else
+			{
+				cout << "Command does not exist." << endl;
+			}
+			
 		}
 	}
 
