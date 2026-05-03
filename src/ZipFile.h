@@ -17,4 +17,7 @@ public:
 	string getType() override {
 		return "ZipFile";
 	}
+	int getSize() override {
+		return 0;
+	}
 };
