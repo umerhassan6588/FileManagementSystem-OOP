@@ -18,11 +18,11 @@ Folder::~Folder() {
 	delete[] list;
 }
 
-Folder::void open() { cout << "Opened: " << getName() << endl; }
+void Folder::open() { cout << "Opened: " << getName() << endl; }
 
-Folder::void create() { cout << "Created: " << getName() << endl; }
+void Folder::create() { cout << "Created: " << getName() << endl; }
 
-Folder::void remove() {
+void Folder::remove() {
 		cout << "Removed: " << getName() << endl;
 		for (int i = 0; i < count; i++)
 		{
@@ -31,20 +31,20 @@ Folder::void remove() {
 		delete[] list;
 }
 
-Folder::string getType() {
+string Folder::getType() {
 		return "Folder";
 }
-Folder::int getSize() {
+int Folder::getSize() {
 		return count;
 }
-Folder::int getCount() {
+int Folder::getCount() {
 		return count;
 }
-Folder::Node** getList() {
+Node** Folder::getList() {
 		return list;
 }
 
-Folder::void addNode(Node* newnode) {
+void Folder::(Node* newnode) {
 		Node** temp = new Node * [count + 1];
 		for (int i = 0; i < count; i++)
 		{
@@ -55,7 +55,7 @@ Folder::void addNode(Node* newnode) {
 		list = temp;
 		count++;
 }
-Folder::void removeNode(Node* oldnode) {
+void Folder::removeNode(Node* oldnode) {
 		Node** temp = new Node * [count - 1];
 		int j = 0;
 		for (int i = 0; i < count; i++)
