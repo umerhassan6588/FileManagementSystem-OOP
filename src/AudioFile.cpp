@@ -15,7 +15,7 @@ void AudioFile::create() {
 	system(cmd.c_str());
 	cout << "Recording Completed!\n";
 }
-void AudioFile::del() {
+void AudioFile::remove() {
 	string path = "root/" + name + ".mpg";
 	::remove(path.c_str());
 }

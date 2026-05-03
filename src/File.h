@@ -10,5 +10,5 @@ public:
 	File(string nam, Node* parent, string n);
 	virtual void open() = 0;
 	virtual void create() = 0;
-	virtual void del() = 0;
+	virtual void remove() = 0;
 };

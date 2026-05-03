@@ -15,7 +15,7 @@ public:
 	virtual void remove() = 0;
 	virtual ~Node() {}
 	string getName() {
-		return name
+		return name;
 	}
 	Node* getPreviousNode() {
 		return prev;

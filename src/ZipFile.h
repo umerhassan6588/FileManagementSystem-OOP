@@ -12,6 +12,6 @@ public:
 	ZipFile(string nam, Node* parent, string originalName, string originalExt);
 	void create() override;
 	void open() override;
-	void del() override;
+	void remove() override;
 	void unzip();
 };

@@ -12,7 +12,7 @@ TxtFile::~TxtFile() {
 }
 
 void TxtFile::save() {
-	string path = "root/" + name + ".txt";
+	string path = "root/" + name + ext;
 	ofstream file(path);
 	for (int i = 0; i < lineCount; i++) {
 		file << lines[i] << endl;
@@ -21,7 +21,7 @@ void TxtFile::save() {
 }
 
 void TxtFile::open() {
-	string pathopen = "root/" + name + ".txt";
+	string pathopen = "root/" + name + ext;
 	ifstream file(pathopen);
 	string line;
 	while (getline(file, line)) {		// file means it keeps copying till it hits "\n" and then goes to the next line
@@ -94,12 +94,12 @@ void TxtFile::open() {
 
 }
 
-void TxtFile::del() {
-	string dir = ("root/" + name + ".txt");
+void TxtFile::remove() {
+	string dir = ("root/" + name + ext);
 	::remove(dir.c_str());			// bcs remove only takes in char arr not strings
 }									// :: bcs there is another remove() in Folder.cpp
 
 void TxtFile::create() {
-	ofstream file("root/" + name + ".txt");		// name from node class. TxtFile -> File -> Node
+	ofstream file("root/" + name + ext);		// name from node class. TxtFile -> File -> Node
 	file.close();
 }
