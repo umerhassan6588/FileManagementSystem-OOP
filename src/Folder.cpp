@@ -44,7 +44,7 @@ Node** Folder::getList() {
 		return list;
 }
 
-void Folder::(Node* newnode) {
+void Folder::addNode(Node* newnode) {
 		Node** temp = new Node * [count + 1];
 		for (int i = 0; i < count; i++)
 		{
