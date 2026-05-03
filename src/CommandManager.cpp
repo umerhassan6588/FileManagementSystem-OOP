@@ -148,7 +148,7 @@ public:
 			if (option == "ls")
 			{
 				ls();
-				break;
+				
 			}
 			else if(option == "mkdir")
 			{
@@ -156,7 +156,7 @@ public:
 				cout << "enter the name:";
 				getline(cin, name);
 				mkdir(name);
-				break;
+				
 			}
 			else if (option == "cd")
 			{
@@ -164,7 +164,7 @@ public:
 				cout << "enter the name:";
 				getline(cin, name);
 				cd(name);
-				break;
+				
 			}
 			else if (option == "search")
 			{
@@ -172,7 +172,7 @@ public:
 				cout << "enter the name of the node to search:";
 				getline(cin, name);
 				search(name);
-				break;
+				
 			}
 			else if (option == "rm")
 			{
@@ -180,7 +180,7 @@ public:
 				cout << "enter the name of the node to delete:";
 				getline(cin, name);
 				rm(name);
-				break;
+				
 			}
 			else if (option == "rename")
 			{
@@ -192,7 +192,7 @@ public:
 				cout << "enter the new name:";
 				getline(cin, newname);
 				rename(name, newname);
-				break;
+				
 			}
 			else if (option == "touch")
 			{
