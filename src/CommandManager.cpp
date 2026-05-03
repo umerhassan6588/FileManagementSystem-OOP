@@ -49,6 +49,13 @@ public:
 		}
 	}
 	void mkdir(string name) {
+		Node** mylist = currentFolder->getList();
+		for (int i = 0; i < currentFolder->getCount(); i++) {
+			if (name == mylist[i]->getName()) {
+				cout << "name already exists." <<endl;
+				return;
+			}
+		}
 		Folder* newFolder = new Folder(name, currentFolder);
 		currentFolder->addNode(newFolder);
 	}
