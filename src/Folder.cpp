@@ -1,49 +1,50 @@
 #include "node.h"
-#include <iostream>
+#include "Folder.h"
+#include<iostream>
 using namespace std;
 
-class Folder : public Node
-{
-protected:
-	Node** list;
-	int count;
 
-public:
-	Folder(string name, Node* prev) : Node(name, prev) {
-		list = nullptr;
-		count = 0;
-	}
-	~Folder() {
-		for (int i = 0; i < count; i++)
-		{
-			delete list[i];
-		}
-		delete[] list;
-	}
 
-	void open() { cout << "Opened: " << getName() << endl; }
-	void create() { cout << "Created: " << getName() << endl; }
-	void remove() {
+
+Folder::Folder(string name, Node* prev) : Node(name, prev) {
+	list = nullptr;
+	count = 0;
+}
+Folder::~Folder() {
+	for (int i = 0; i < count; i++)
+	{
+		delete list[i];
+	}
+	delete[] list;
+}
+
+Folder::void open() { cout << "Opened: " << getName() << endl; }
+
+Folder::void create() { cout << "Created: " << getName() << endl; }
+
+Folder::void remove() {
 		cout << "Removed: " << getName() << endl;
 		for (int i = 0; i < count; i++)
 		{
 			delete list[i];
 		}
 		delete[] list;
-	}
-	string getType() {
+}
+
+Folder::string getType() {
 		return "Folder";
-	}
-	int getSize() {
+}
+Folder::int getSize() {
 		return count;
-	}
-	int getCount() {
+}
+Folder::int getCount() {
 		return count;
-	}
-	Node** getList() {
+}
+Folder::Node** getList() {
 		return list;
-	}
-	void addNode(Node* newnode) {
+}
+
+Folder::void addNode(Node* newnode) {
 		Node** temp = new Node * [count + 1];
 		for (int i = 0; i < count; i++)
 		{
@@ -53,8 +54,8 @@ public:
 		delete[] list;
 		list = temp;
 		count++;
-	}
-	void removeNode(Node* oldnode) {
+}
+Folder::void removeNode(Node* oldnode) {
 		Node** temp = new Node * [count - 1];
 		int j = 0;
 		for (int i = 0; i < count; i++)
@@ -64,10 +65,8 @@ public:
 				j++;
 			}
 		}
-		
 		delete[] list;
 		list = temp;
 		count--;
-	}
-};
+}
 
