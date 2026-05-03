@@ -148,7 +148,6 @@ public:
 			if (option == "ls")
 			{
 				ls();
-				
 			}
 			else if(option == "mkdir")
 			{
