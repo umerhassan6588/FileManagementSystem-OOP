@@ -8,5 +8,5 @@ public:
 	AudioFile(string nam, Node* parent);
 	void open() override;
 	void create() override;
-	void del() override;
+	void remove() override;
 };

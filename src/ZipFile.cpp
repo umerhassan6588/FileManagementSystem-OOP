@@ -20,7 +20,7 @@ void ZipFile::unzip() {
 	system(cmd.c_str());
 	cout << "The file has been unzipped!\n";
 }
-void ZipFile::del() {
+void ZipFile::remove() {
 	string path = "root/" + name + ".zip";
 	::remove(path.c_str());
 }
