@@ -33,7 +33,7 @@ public:
 			return name;
 		}
 	}
-	string setName(string newname){
+	void setName(string newname){
 		name = newname;
 	}
 	virtual string getType() = 0;
