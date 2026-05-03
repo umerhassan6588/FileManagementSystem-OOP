@@ -9,4 +9,10 @@ public:
 	void open() override;
 	void create() override;
 	void remove() override;
+	string getType() override {
+		return "AudioFile";
+	}
+	int getSize() override {
+		return 0;
+	}
 };

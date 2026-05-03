@@ -13,5 +13,11 @@ public:
 	void create() override;
 	void remove() override;
 	void save();
+	string getType() override {
+		return "TxtFile";
+	}
+	int getSize() override {
+		return lineCount;
+	}
 	~TxtFile();
 };

@@ -22,7 +22,7 @@ void pvtFile::create() {
 	cout << "Enter Passkey for this file: ";
 	cin >> pass;
 }
-void pvtFile::del() {
+void pvtFile::remove() {
 	string inp;
 	cout << "Enter Passkey:";
 	getline(cin, inp);
@@ -32,7 +32,7 @@ void pvtFile::del() {
 			cout << "Are you sure you want to delete? press y to confirm and n to exit: ";
 			cin >> inp1;
 			if (inp1 == 'y' || inp1 == 'Y') {
-				TxtFile::del();
+				TxtFile::remove();
 				break;
 			}
 			else if (inp1 == 'n' || inp1 == 'N') {

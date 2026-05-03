@@ -11,4 +11,13 @@ public:
 	virtual void open() = 0;
 	virtual void create() = 0;
 	virtual void remove() = 0;
+	virtual string getType() {
+		return "File";
+	}
+	virtual int getSize() {
+		return 0;
+	}
+	string getExt() {
+		return ext;
+	}
 };
