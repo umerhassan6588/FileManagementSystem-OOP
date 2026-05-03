@@ -1,4 +1,5 @@
-#include "Folder.cpp"
+#include "Folder.h"
+
 #include <iostream>
 #include <string>
 using namespace std;
@@ -43,7 +44,7 @@ public:
 			cout << "Name: " << mylist[i]->getName() << " | Type: " << mylist[i]->getType() << " | Size: " << mylist[i]->getSize() << endl;
 		}
 	}
-	void mkdir() {
+	void mkdir(string name) {
 		Folder* newFolder = new Folder(name, currentFolder);
 		currentFolder->addNode(newFolder);
 	}
@@ -59,7 +60,7 @@ public:
 		for (int i = 0; i < currentFolder->getCount(); i++)
 		{
 			if (name == mylist[i]->getName()) {
-				Folder* temp = dynamic_cast<Folder*>mylist[i];
+				Folder* temp = dynamic_cast<Folder*>(mylist[i]);
 				if (temp == nullptr)
 				{
 					cout << "Not a folder" << endl; break;
@@ -78,7 +79,7 @@ public:
 			cout << "not found" << endl;
 		}
 	}
-	search(string name){ 
+	void search(string name){ 
 		Node** mylist = currentFolder->getList();
 		for (int i = 0; i < currentFolder->getCount(); i++)
 		{
@@ -104,7 +105,7 @@ public:
 		}
 		if (found ==false)
 		{
-			cout << "not found"
+			cout << "not found" << endl;
 		}
 	}
 	void rename(string name,string newname) {
@@ -158,7 +159,10 @@ public:
 				break;
 			 }
 			case 2: {
-				mkdir();
+				string name;
+				cout << "enter the name:";
+				getline(cin, name);
+				mkdir(name);
 				break;
 			 }
 			case 3: {
@@ -182,7 +186,7 @@ public:
 				rm(name);
 				break;
 			 }
-			case 5:{
+			case 6:{
 				string name;
 				string newname;
 				cout << "enter the name to change:";
