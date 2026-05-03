@@ -1,5 +1,6 @@
 #include "Folder.cpp"
 #include <iostream>
+#include <string>
 using namespace std;
 
 class CommandManager
@@ -124,7 +125,7 @@ public:
 		}
 		if (found == false)
 		{
-			cout << "not found"
+			cout << "not found" <<endl;
 		}
 	}
 	
@@ -143,7 +144,7 @@ public:
 			cout << "8. exit" << endl;
 			cout << "enter the command you want to run press,1-8: " << endl;
 			cin >> option;
-			while (cin.fail() || (option >8 || option <1)
+			while (cin.fail() || (option > 8 || option < 1))
 			{
 				cin.ignore();
 				cin.clear(1000);
@@ -152,31 +153,36 @@ public:
 			}
 			switch (option)
 			{
-			case:1{
+			case 1: {
 				ls();
-			}
-			case:2{
+				break;
+			 }
+			case 2: {
 				mkdir();
-			}
-			case:3{
+				break;
+			 }
+			case 3: {
 				string name;
 				cout << "enter the name:";
 				getline(cin, name);
 				cd(name);
-			}
-			case:4{
+				break;
+			 }
+			case 4: {
 				string name;
 				cout << "enter the name of the node to search:";
 				getline(cin, name);
 				search(name);
-			}
-			case:5{
+				break;
+			 }
+			case 5: {
 				string name;
 				cout << "enter the name of the node to delete:";
 				getline(cin, name);
 				rm(name);
-			}
-			case:6{
+				break;
+			 }
+			case 5:{
 				string name;
 				string newname;
 				cout << "enter the name to change:";
@@ -184,18 +190,20 @@ public:
 				cin.clear(100);
 				cout << "enter the new name:";
 				getline(cin, newname);
-				rm(name,newname);
-			}
-			case:7{
+				rename(name, newname);
+				break;
+			 }
+			case 7: {
 				//touch for files.
 			}
-			case:8{
+			case 8:{
 				cout << "program exitted";
 			}
-				
+
 			default:
 				break;
 			}
+		
 		}
 	}
 
