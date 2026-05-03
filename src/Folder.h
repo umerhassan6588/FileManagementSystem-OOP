@@ -8,7 +8,7 @@ protected:
 	int count;
 
 public:
-	Folder(string name, Node* prev) : Node(name, prev);
+	Folder(string name, Node* prev) : Node(name, prev){}
 	~Folder();
 
 	void open();

@@ -37,10 +37,6 @@ public:
 			}
 		}
 	}
-
-
-
-
 	void ls() {
 		Node** mylist = currentFolder->getList();
 		for (int i = 0; i < currentFolder->getCount(); i++)
