@@ -1,6 +1,7 @@
 #pragma once
 #include "node.h"
 #include <iostream>
+using namespace std;
 class Folder : public Node
 {
 protected:
@@ -8,9 +9,8 @@ protected:
 	int count;
 
 public:
-	Folder(string name, Node* prev) : Node(name, prev);
+	Folder(string name, Node* prev);
 	~Folder();
-
 	void open();
 	void create();
 	void remove();
