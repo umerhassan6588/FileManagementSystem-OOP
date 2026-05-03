@@ -4,7 +4,7 @@
 #include <fstream>
 using namespace std;
 
-TxtFile::TxtFile(string nam, Node* parent, string ext) : File(nam, parent, ".txt"), lineCount(0), lineCap(10) {
+TxtFile::TxtFile(string nam, Node* parent, string ext) : File(nam, parent, ext), lineCount(0), lineCap(10) {
 	lines = new string[lineCap];
 }
 TxtFile::~TxtFile() {

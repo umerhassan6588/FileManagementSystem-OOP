@@ -14,4 +14,7 @@ public:
 	void open() override;
 	void remove() override;
 	void unzip();
+	string getType() override {
+		return "ZipFile";
+	}
 };

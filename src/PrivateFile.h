@@ -12,5 +12,8 @@ public:
 	pvtFile(string name, Node* parent);
 	void open() override;
 	void create() override;
-	void del() override;
+	void remove() override;
+	string getType() override {
+		return "PrivateFile";
+	}
 };

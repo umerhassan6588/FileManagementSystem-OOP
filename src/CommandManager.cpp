@@ -1,5 +1,9 @@
 #include "Folder.h"
-
+#include "File.h"
+#include "TxtFile.h"
+#include "AudioFile.h"
+#include "PrivateFile.h"
+#include "ZipFile.h"
 #include <iostream>
 #include <string>
 using namespace std;
@@ -63,7 +67,10 @@ public:
 				Folder* temp = dynamic_cast<Folder*>(mylist[i]);
 				if (temp == nullptr)
 				{
-					cout << "Not a folder" << endl; break;
+					mylist[i]->open();
+					found = true;
+					cout << "File opened successfully." << endl;
+					break;
 				}
 				else
 				{
@@ -93,14 +100,12 @@ public:
 		{
 			if (name == mylist[i]->getName())
 			{
-				currentFolder->removeNode(mylist[i]);
-				delete mylist[i];
+				Node* toDelete = mylist[i];
+				toDelete->remove();
+				currentFolder->removeNode(toDelete);
+				delete toDelete;
 				found = true;
 				break;
-			}
-			else
-			{
-				bool found = false;
 			}
 		}
 		if (found ==false)
@@ -119,14 +124,45 @@ public:
 				found = true;
 				break;
 			}
-			else
-			{
-				found = false;
-			}
 		}
 		if (found == false)
 		{
 			cout << "not found" <<endl;
+		}
+	}
+
+	void touch(string type, string name) {
+		File* newFile = NULL;
+		if (type == "txt") {
+			newFile = new TxtFile(name, currentFolder);
+		}
+		else if (type == "mpg") {
+			newFile = new AudioFile(name, currentFolder);
+		}
+		else if (type == "priv") {
+			newFile = new pvtFile(name, currentFolder);
+		}
+		else if (type == "zip") {
+			string nodeName;
+			cout << "Enter name of node to zip: ";
+			getline(cin, nodeName);
+			Node** mylist = currentFolder->getList();
+			for (int i = 0; i < currentFolder->getCount(); i++) {
+				if (mylist[i]->getName() == nodeName) {
+					File* fileNode = dynamic_cast<File*>(mylist[i]);
+					if (fileNode != nullptr) {
+						newFile = new ZipFile(name + "-zip", currentFolder, nodeName, fileNode->getExt());
+					}break;
+				}
+			}
+		}
+		else {
+			cout << "Invalid File Type.\n";
+			return;
+		}
+		if (newFile != NULL) {
+			newFile->create();
+			currentFolder->addNode(newFile);
 		}
 	}
 	
@@ -135,14 +171,15 @@ public:
 		string option;
 		while (true)
 		{
-			cout << "1. ls" << endl;
-			cout << "2. mkdir" << endl;
-			cout << "3. cd" << endl;
-			cout << "4. search" << endl;
-			cout << "5. rm" << endl;
-			cout << "6. rename" << endl;
-			cout << "7. touch" << endl;
-			cout << "8. exit" << endl;
+			cout << "\nList of available commands:\n";
+			cout << "ls" << endl;
+			cout << "mkdir" << endl;
+			cout << "cd" << endl;
+			cout << "search" << endl;
+			cout << "rm" << endl;
+			cout << "rename" << endl;
+			cout << "touch" << endl;
+			cout << "exit\n" << endl;
 			cout << "enter the command you want to run: " << endl;
 			cin >> option;
 			if (option == "ls")
@@ -152,6 +189,8 @@ public:
 			else if(option == "mkdir")
 			{
 				string name;
+				cin.clear();
+				cin.ignore(1000, '\n');
 				cout << "enter the name:";
 				getline(cin, name);
 				mkdir(name);
@@ -160,6 +199,8 @@ public:
 			else if (option == "cd")
 			{
 				string name;
+				cin.clear();
+				cin.ignore(1000, '\n');
 				cout << "enter the name:";
 				getline(cin, name);
 				cd(name);
@@ -168,6 +209,8 @@ public:
 			else if (option == "search")
 			{
 				string name;
+				cin.clear();
+				cin.ignore(1000, '\n');
 				cout << "enter the name of the node to search:";
 				getline(cin, name);
 				search(name);
@@ -176,6 +219,8 @@ public:
 			else if (option == "rm")
 			{
 				string name;
+				cin.clear();
+				cin.ignore(1000, '\n');
 				cout << "enter the name of the node to delete:";
 				getline(cin, name);
 				rm(name);
@@ -185,19 +230,26 @@ public:
 			{
 				string name;
 				string newname;
+				cin.clear();
+				cin.ignore(1000, '\n');
 				cout << "enter the name to change:";
 				getline(cin, name);
-				cin.clear(100);
 				cout << "enter the new name:";
 				getline(cin, newname);
 				rename(name, newname);
-				
-			}
+			 }
 			else if (option == "touch")
 			{
-
+				string name, type;
+				cin.clear();
+				cin.ignore(1000, '\n');
+				cout << "Enter File Type (txt/mpg/priv/zip): ";
+				getline(cin, type);
+				cout << "Enter file name: ";
+				getline(cin, name);
+				touch(type, name);
 			}
-			else if(option == "exit")
+			else if (option == "exit")
 			{
 				cout << "exitted succefully" << endl;
 				break;
@@ -205,10 +257,9 @@ public:
 			else
 			{
 				cout << "Command does not exist." << endl;
+				continue;
 			}
 			
 		}
 	}
-
-
 };
