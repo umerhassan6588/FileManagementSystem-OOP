@@ -4,6 +4,8 @@
 using namespace std;
 
 int main() {
+	system("rmdir /s /q root");
+	system("mkdir root");
 	Folder* root = new Folder("root", nullptr);
 	CommandManager cm(root);
 	cm.run();

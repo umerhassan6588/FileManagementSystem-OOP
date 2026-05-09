@@ -23,4 +23,5 @@ void ZipFile::unzip() {
 void ZipFile::remove() {
 	string path = "root/" + name + ".zip";
 	::remove(path.c_str());
+	isDeleted = true;
 }

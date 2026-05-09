@@ -18,4 +18,5 @@ void AudioFile::create() {
 void AudioFile::remove() {
 	string path = "root/" + name + ".mpg";
 	::remove(path.c_str());
+	isDeleted = true;
 }

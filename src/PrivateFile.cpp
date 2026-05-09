@@ -20,8 +20,6 @@ void pvtFile::open() {
 void pvtFile::create() {
 	TxtFile::create();
 	cout << "Enter Passkey for this file: ";
-	cin.clear();
-	cin.ignore(1000, '\n');
 	getline(cin, pass);
 }
 void pvtFile::remove() {
@@ -35,6 +33,7 @@ void pvtFile::remove() {
 			cin >> inp1;
 			if (inp1 == 'y' || inp1 == 'Y') {
 				TxtFile::remove();
+				isDeleted = true;
 				break;
 			}
 			else if (inp1 == 'n' || inp1 == 'N') {

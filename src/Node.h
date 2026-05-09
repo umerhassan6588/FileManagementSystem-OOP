@@ -7,7 +7,9 @@ class Node
 protected:
 	string name;
 	Node* prev;
+	
 public:
+	bool isDeleted = false;
 	Node(string fname, Node* p) {
 		name = fname;
 		prev = p;

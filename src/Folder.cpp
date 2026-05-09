@@ -31,6 +31,7 @@ void Folder::remove() {
 		delete[] list;
 		list = nullptr;
 		count = 0;
+		isDeleted = true;
 }
 
 string Folder::getType() {

@@ -44,6 +44,10 @@ void CommandManager::ls() {
 }
 
 void CommandManager::mkdir(string name) {
+	if (name == "" || name[0] == ' ') {
+		cout << "Invalid name." << endl;
+		return;
+	}
 	Node** mylist = currentFolder->getList();
 	for (int i = 0; i < currentFolder->getCount(); i++) {
 		if (name == mylist[i]->getName()) {
@@ -55,6 +59,10 @@ void CommandManager::mkdir(string name) {
 	currentFolder->addNode(newFolder);
 }
 void CommandManager::cd(string name) {
+	if (name == "" || name[0] == ' ') {
+		cout << "Invalid name." << endl;
+		return;
+	}
 	Node** mylist = currentFolder->getList();
 	bool found = false;	
 	
@@ -93,6 +101,10 @@ void CommandManager::cd(string name) {
 	}
 }
 void CommandManager::search(string name){
+	if (name == "" || name[0] == ' ') {
+		cout << "Invalid name." << endl;
+		return;
+	}
 	Node** mylist = currentFolder->getList();
 	for (int i = 0; i < currentFolder->getCount(); i++)
 	{
@@ -100,6 +112,10 @@ void CommandManager::search(string name){
 	}
 }
 void CommandManager::rm(string name) {
+	if (name == "" || name[0] == ' ') {
+		cout << "Invalid name." << endl;
+		return;
+	}
 	Node** mylist = currentFolder->getList();
 	bool found = false;
 	for (int i = 0; i < currentFolder->getCount(); i++)
@@ -108,8 +124,12 @@ void CommandManager::rm(string name) {
 		{
 			Node* toDelete = mylist[i];
 			toDelete->remove();
-			currentFolder->removeNode(toDelete);
-			delete toDelete;
+			if (toDelete->isDeleted == true)
+			{
+				currentFolder->removeNode(toDelete);
+				delete toDelete;
+				
+			}
 			found = true;
 			break;
 		}
@@ -118,8 +138,13 @@ void CommandManager::rm(string name) {
 	{
 		cout << "not found" << endl;
 	}
+
 }
 void CommandManager::rename(string name,string newname) {
+	if (name == "" || name[0] == ' ') {
+		cout << "Invalid name." << endl;
+		return;
+	}
 	Node** mylist = currentFolder->getList();
 	bool found = false;
 	for (int i = 0; i < currentFolder->getCount(); i++)
@@ -138,14 +163,26 @@ void CommandManager::rename(string name,string newname) {
 }
 
 void CommandManager::touch(string type, string name) {
+	if (name == "" || name[0] == ' ') {
+		cout << "Invalid name." << endl;
+		return;
+	}
 	Node** mylist = currentFolder->getList();
 	for (int i = 0; i < currentFolder->getCount(); i++)
 	{
+		
 		File* existingFile = dynamic_cast<File*>(mylist[i]);
-			if (mylist[i]->getName() == name && existingFile->getExt() == ("." + type)) {
+		if (existingFile != nullptr) {
+			string checkname = name;
+			if (type == "zip")
+			{
+				checkname = checkname + "-zip";
+			}
+			if (mylist[i]->getName() == checkname && existingFile->getExt() == ("." + type)) {
 				cout << "Name already exists." << endl;
 				return;
 			}
+		}
 	}
 
 	File* newFile = nullptr;
@@ -170,7 +207,16 @@ void CommandManager::touch(string type, string name) {
 					newFile = new ZipFile(name + "-zip", currentFolder, nodeName, fileNode->getExt());
 					break;
 				}
+				else
+				{
+					cout << "Cannot Zip a folder." << endl;
+					return;
+				}
 			}
+		}
+		if (newFile == nullptr) {
+			cout << "Node not found." << endl;
+			return;
 		}
 	}
 	if (newFile != nullptr) {
