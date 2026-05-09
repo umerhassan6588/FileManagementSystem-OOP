@@ -20,7 +20,9 @@ void pvtFile::open() {
 void pvtFile::create() {
 	TxtFile::create();
 	cout << "Enter Passkey for this file: ";
-	cin >> pass;
+	cin.clear();
+	cin.ignore(1000, '\n');
+	getline(cin, pass);
 }
 void pvtFile::remove() {
 	string inp;

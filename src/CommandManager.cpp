@@ -6,7 +6,7 @@
 #include "ZipFile.h"
 #include <iostream>
 #include <string>
-#include "CommandManager.h";
+#include "CommandManager.h"
 using namespace std;
 
 
@@ -59,7 +59,12 @@ void CommandManager::cd(string name) {
 	bool found = false;	
 	
 	if (name == "..") {
-		currentFolder = (Folder*)currentFolder->getPreviousNode();
+		Folder* temp = (Folder*)currentFolder->getPreviousNode();
+		if (temp == nullptr) {
+			cout << "already at the root";
+			return;
+		}
+		currentFolder = temp;
 		return;
 	}
 
@@ -71,7 +76,6 @@ void CommandManager::cd(string name) {
 			{
 				mylist[i]->open();
 				found = true;
-				cout << "File opened successfully." << endl;
 				break;
 			}
 			else
@@ -134,7 +138,7 @@ void CommandManager::rename(string name,string newname) {
 }
 
 void CommandManager::touch(string type, string name) {
-	File* newFile = NULL;
+	File* newFile = nullptr;
 	if (type == "txt") {
 		newFile = new TxtFile(name, currentFolder);
 	}
@@ -154,15 +158,12 @@ void CommandManager::touch(string type, string name) {
 				File* fileNode = dynamic_cast<File*>(mylist[i]);
 				if (fileNode != nullptr) {
 					newFile = new ZipFile(name + "-zip", currentFolder, nodeName, fileNode->getExt());
-				}break;
+					break;
+				}
 			}
 		}
 	}
-	else {
-		cout << "Invalid File Type.\n";
-		return;
-	}
-	if (newFile != NULL) {
+	if (newFile != nullptr) {
 		newFile->create();
 		currentFolder->addNode(newFile);
 	}
@@ -182,8 +183,10 @@ void CommandManager::run() {
 		cout << "rename" << endl;
 		cout << "touch" << endl;
 		cout << "exit\n" << endl;
-		cout << "enter the command you want to run: " << endl;
+		cout << currentFolder->getPath() << " > enter command: ";
 		cin >> option;
+		cin.clear();
+		cin.ignore(1000, '\n');
 		if (option == "ls")
 		{
 			ls();
@@ -191,8 +194,6 @@ void CommandManager::run() {
 		else if(option == "mkdir")
 		{
 			string name;
-			cin.clear();
-			cin.ignore(1000, '\n');
 			cout << "enter the name:";
 			getline(cin, name);
 			mkdir(name);
@@ -201,8 +202,6 @@ void CommandManager::run() {
 		else if (option == "cd")
 		{
 			string name;
-			cin.clear();
-			cin.ignore(1000, '\n');
 			cout << "enter the name:";
 			getline(cin, name);
 			cd(name);
@@ -211,8 +210,6 @@ void CommandManager::run() {
 		else if (option == "search")
 		{
 			string name;
-			cin.clear();
-			cin.ignore(1000, '\n');
 			cout << "enter the name of the node to search:";
 			getline(cin, name);
 			search(name);
@@ -221,8 +218,6 @@ void CommandManager::run() {
 		else if (option == "rm")
 		{
 			string name;
-			cin.clear();
-			cin.ignore(1000, '\n');
 			cout << "enter the name of the node to delete:";
 			getline(cin, name);
 			rm(name);
@@ -232,8 +227,6 @@ void CommandManager::run() {
 		{
 			string name;
 			string newname;
-			cin.clear();
-			cin.ignore(1000, '\n');
 			cout << "enter the name to change:";
 			getline(cin, name);
 			cout << "enter the new name:";
@@ -243,10 +236,12 @@ void CommandManager::run() {
 		else if (option == "touch")
 		{
 			string name, type;
-			cin.clear();
-			cin.ignore(1000, '\n');
 			cout << "Enter File Type (txt/mpg/priv/zip): ";
 			getline(cin, type);
+			if (type != "txt" && type != "mpg" && type != "priv" && type != "zip") {
+				cout << "Invalid file type" << endl;
+				continue;
+			}
 			cout << "Enter file name: ";
 			getline(cin, name);
 			touch(type, name);
