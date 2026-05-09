@@ -1,6 +1,4 @@
-#include "Folder.h"
-#include "CommandManager.cpp"
-#include<iostream
+#include "src/Folder.h"
 #include <iostream>
 #include "src/CommandManager.cpp"
 using namespace std;
