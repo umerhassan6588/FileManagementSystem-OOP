@@ -138,6 +138,16 @@ void CommandManager::rename(string name,string newname) {
 }
 
 void CommandManager::touch(string type, string name) {
+	Node** mylist = currentFolder->getList();
+	for (int i = 0; i < currentFolder->getCount(); i++)
+	{
+		File* existingFile = dynamic_cast<File*>(mylist[i]);
+			if (mylist[i]->getName() == name && existingFile->getExt() == ("." + type)) {
+				cout << "Name already exists." << endl;
+				return;
+			}
+	}
+
 	File* newFile = nullptr;
 	if (type == "txt") {
 		newFile = new TxtFile(name, currentFolder);
