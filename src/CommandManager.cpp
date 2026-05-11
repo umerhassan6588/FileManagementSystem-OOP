@@ -7,11 +7,13 @@
 #include <iostream>
 #include <string>
 #include "CommandManager.h"
+#include <fstream>
 using namespace std;
 
 
 CommandManager::CommandManager(Folder* rootFolder) {
 		currentFolder = rootFolder;
+		this ->rootFolder = rootFolder;
 }
 void CommandManager::searchHelper(Node* node, string name) {
 	Folder* isFolder = dynamic_cast<Folder*>(node);
@@ -224,7 +226,32 @@ void CommandManager::touch(string type, string name) {
 		currentFolder->addNode(newFile);
 	}
 }
-	
+void CommandManager::saveHelper(Node* node, ofstream& file) {
+	file << node->getType() << "," << node->getName() << "," << node->getPath() << endl;
+	Folder* isFolder = dynamic_cast<Folder*>(node);
+	if (isFolder != nullptr)
+	{
+		for (int i = 0; i < isFolder->getCount(); i++) {
+			saveHelper(isFolder->getList()[i], file);
+		}
+	}
+}
+void CommandManager::save() {
+	ofstream file("save.txt");
+	if (file.is_open())
+	{
+		Node** mylist = rootFolder->getList();
+		for (int i = 0; i < rootFolder->getCount(); i++)
+		{
+			saveHelper(mylist[i], file);
+		}
+		file.close();
+	}
+	else
+	{
+		cout << "Error file did not open" << endl;
+	}
+}
 
 void CommandManager::run() {
 	string option;
@@ -304,6 +331,7 @@ void CommandManager::run() {
 		}
 		else if (option == "exit")
 		{
+
 			cout << "exitted succefully" << endl;
 			break;
 		}

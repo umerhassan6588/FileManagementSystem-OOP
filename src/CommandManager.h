@@ -12,6 +12,7 @@ using namespace std;
 class CommandManager
 {
 	Folder* currentFolder;
+	Folder* rootFolder;
 public:
 	CommandManager(Folder* rootFolder);
 	void searchHelper(Node* node, string name);
@@ -22,5 +23,8 @@ public:
 	void rm(string name);
 	void rename(string name, string newname);
 	void touch(string type, string name);
+	void saveHelper(Node* node, ofstream& file);
+	void save();
 	void run();
+	
 };
