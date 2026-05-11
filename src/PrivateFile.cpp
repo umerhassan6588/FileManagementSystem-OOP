@@ -6,6 +6,9 @@ using namespace std;
 pvtFile::pvtFile(string nam, Node* parent) : TxtFile(nam, parent, ".priv") {
 
 }
+pvtFile::pvtFile(string nam, Node* parent,string password) : TxtFile(nam, parent, ".priv") {
+	pass = password;
+}
 void pvtFile::open() {
 	string inp;
 	cout << "Enter Passkey:";
@@ -16,6 +19,9 @@ void pvtFile::open() {
 	else {
 		cout << "Wrong Password!\n";
 	}
+}
+string pvtFile::getPass() {
+	return pass;
 }
 void pvtFile::create() {
 	TxtFile::create();

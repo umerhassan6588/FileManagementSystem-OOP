@@ -25,6 +25,8 @@ public:
 	void touch(string type, string name);
 	void saveHelper(Node* node, ofstream& file);
 	void save();
+	void load();
+	Folder* findFolder(Node* node, string path);
 	void run();
 	
 };

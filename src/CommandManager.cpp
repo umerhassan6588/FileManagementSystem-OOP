@@ -14,6 +14,7 @@ using namespace std;
 CommandManager::CommandManager(Folder* rootFolder) {
 		currentFolder = rootFolder;
 		this ->rootFolder = rootFolder;
+		load();
 }
 void CommandManager::searchHelper(Node* node, string name) {
 	Folder* isFolder = dynamic_cast<Folder*>(node);
@@ -227,7 +228,16 @@ void CommandManager::touch(string type, string name) {
 	}
 }
 void CommandManager::saveHelper(Node* node, ofstream& file) {
-	file << node->getType() << "," << node->getName() << "," << node->getPath() << endl;
+	
+	pvtFile* Private = dynamic_cast<pvtFile*>(node);
+		if (Private != nullptr)
+		{
+			file << Private->getType() << "," << Private->getName() << "," << Private->getPath() << Private->getPass() << endl;
+		}
+		else
+		{
+			file << node->getType() << "," << node->getName() << "," << node->getPath() << endl;
+		}
 	Folder* isFolder = dynamic_cast<Folder*>(node);
 	if (isFolder != nullptr)
 	{
@@ -251,6 +261,80 @@ void CommandManager::save() {
 	{
 		cout << "Error file did not open" << endl;
 	}
+}
+Folder* CommandManager::findFolder(Node* node, string path) {
+	Folder* isFolder = dynamic_cast<Folder*>(node);
+	if (isFolder == nullptr) {
+		return nullptr;
+	}
+	else if (isFolder->getPath() == path)
+	{
+		return isFolder;
+	}
+	else
+	{
+		for (int i = 0; i < isFolder->getCount(); i++) {
+			Folder* found = findFolder(isFolder->getList()[i], path);
+			if (found != nullptr) { 
+				return found;
+			}
+
+		}
+	}
+	return nullptr;
+}
+
+void CommandManager::load() {
+	ifstream file("save.txt");
+	if (file.is_open())
+	{
+		string line;
+		while (getline(file, line)) {
+			int firstComma = line.find(',');
+			int secondComma = line.find(',', firstComma+1);
+			string type = line.substr(0,firstComma);
+			string name = line.substr(firstComma+1,secondComma-firstComma-1);
+			string path = line.substr(secondComma+1);
+			int lastSlash= path.find_last_of('/');
+			string parentPath = path.substr(0, lastSlash);
+			Folder* parent = findFolder(rootFolder, parentPath);
+			if (parent == nullptr) {
+				continue;
+			}
+			Node* newNode = nullptr;
+			if (type == "Folder")
+			{
+				newNode = new Folder(name, parent);
+			}
+			else if (type == "TxtFile")
+			{
+				newNode = new TxtFile(name, parent);
+			}
+			else if (type == "AudioFile")
+			{
+				newNode = new AudioFile(name, parent);
+			}
+			else if ("PrivateFile")
+			{
+				int thirdComma = line.find(',', secondComma + 1);
+				string cleanPath = line.substr(secondComma + 1, thirdComma - secondComma - 1);
+				string password = line.substr(thirdComma + 1);
+				int ls = cleanPath.find_last_of('/');
+				string ppath = cleanPath.substr(0, ls);
+				parent = findFolder(rootFolder, parentPath);
+				newNode = new pvtFile(name, parent,password);
+			}
+			else if (type == "ZipFile")
+			{
+				newNode = new ZipFile(name, parent, name, ".zip");
+			}
+			if (newNode != nullptr)
+			{
+				parent->addNode(newNode);
+			}
+		}
+	}
+	file.close();
 }
 
 void CommandManager::run() {
