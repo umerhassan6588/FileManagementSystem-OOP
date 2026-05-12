@@ -5,7 +5,7 @@ using namespace std;
 
 class AudioFile : public File {
 public:
-	AudioFile(string nam, Node* parent);
+	AudioFile(string nam, Node* parent,string fullpath);
 	void open() override;
 	void create() override;
 	void remove() override;

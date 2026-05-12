@@ -25,18 +25,15 @@ public:
 		return prev;
 	}
 	string getPath() {//recursive function to get path of node.
-		string path = "";
-		
-		if (prev != nullptr)
 		{
-			path = path + "/" + name;
-			return prev->getPath() + path;
-		}
-		else
-		{
-			return name;
+			if (prev == nullptr) {
+				return name;
+			}
+
+			return prev->getPath() + "/" + name;
 		}
 	}
+	
 	void setName(string newname){
 		name = newname;
 	}

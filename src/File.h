@@ -6,8 +6,9 @@ using namespace std;
 class File : public Node {
 protected:
 	string ext;
+	string fullPath;
 public:
-	File(string nam, Node* parent, string n);
+	File(string nam, Node* parent, string path, string ext);
 	virtual void open() = 0;
 	virtual void create() = 0;
 	virtual void remove() = 0;

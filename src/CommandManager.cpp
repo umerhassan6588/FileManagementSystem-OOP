@@ -11,6 +11,7 @@
 #include <fstream>
 #include <cstdio>
 #include <cerrno>
+#include <direct.h>
 using namespace std;
 
 
@@ -65,7 +66,14 @@ void CommandManager::mkdir(string name) {// creates a folder.
 			return;
 		}
 	}
+	string fullPath = basePath + currentFolder->getPath() + "/" + name;
 	Folder* newFolder = new Folder(name, currentFolder);
+	if (_mkdir(fullPath.c_str()) != 0)
+	{
+		cout << "Failed to create folder on disk" << endl;
+		cout << "Error: " << strerror(errno) << endl;
+		return;
+	}
 	currentFolder->addNode(newFolder);
 	cout << "Folder created Successfully." << endl;
 }
@@ -122,7 +130,41 @@ void CommandManager::search(string name){// used to search for required node and
 		searchHelper(mylist[i], name);
 	}
 }
+void CommandManager::deleteRecursively(Node* node) {
 
+	string fullPath = basePath + node->getPath();
+	Folder* folder = dynamic_cast<Folder*>(node);
+
+	
+	if (folder!=nullptr)
+	{
+
+		Node** folderlist = folder->getList();
+		int filecount = folder->getCount();
+		for (size_t i = 0; i < filecount; i++)
+		{
+			deleteRecursively(folderlist[i]);
+		}
+		if (_rmdir(fullPath.c_str()) != 0)
+		{
+			cout << "Failed to delete folder: " << fullPath << endl;
+
+		}
+	}
+	else
+	{
+		File* file = dynamic_cast<File*>(node);
+		string fullPath = basePath + node->getPath() + file->getExt()  ;
+		if (::remove(fullPath.c_str()) != 0)
+		{
+			cout << "Failed to delete file: " << fullPath << endl;
+			cout << "Error: " << strerror(errno) << endl;
+		}
+	}
+	
+
+
+}
 void CommandManager::rm(string name) {// used to delete a node.
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
@@ -135,6 +177,7 @@ void CommandManager::rm(string name) {// used to delete a node.
 		if (name == mylist[i]->getName())
 		{
 			Node* toDelete = mylist[i];
+			deleteRecursively(toDelete);
 			toDelete->remove();
 			if (toDelete->isDeleted == true)
 			{
@@ -170,13 +213,11 @@ void CommandManager::Rename(string name,string newname) {//used to rename the op
 				string oldpath = basePath + mylist[i]->getPath() + temp->getExt();
 				mylist[i]->setName(newname);
 				string newpath = basePath + mylist[i]->getPath() + temp->getExt();
-				cout << "OLD: " << oldpath << endl;
-				cout << "NEW: " << newpath << endl;
 				if (::rename(oldpath.c_str(), newpath.c_str()) != 0)
 				{
 					mylist[i]->setName(name);
 					cout << "Rename failed." << endl;
-					cout << "Error: " << strerror(errno) << endl;
+	
 				}
 				else
 				{
@@ -190,8 +231,6 @@ void CommandManager::Rename(string name,string newname) {//used to rename the op
 				string oldpath = basePath + mylist[i]->getPath();
 				mylist[i]->setName(newname);
 				string newpath = basePath + mylist[i]->getPath();
-				cout << "OLD: " << oldpath << endl;
-				cout << "NEW: " << newpath << endl;
 				if (::rename(oldpath.c_str(), newpath.c_str()) != 0)
 				{
 					mylist[i]->setName(name);
@@ -236,7 +275,7 @@ void CommandManager::touch(string type, string name) {//create file of any type
 			}
 		}
 	}
-
+	string fullPath = basePath + currentFolder->getPath() + "/" + name;
 	File* newFile = nullptr;
 	if (type == "txt") {
 		newFile = new TxtFile(name, currentFolder);

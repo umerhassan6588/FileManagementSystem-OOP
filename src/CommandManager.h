@@ -29,5 +29,6 @@ public:
 	void load();
 	Folder* findFolder(Node* node, string path);
 	void run();
+	void deleteRecursively(Node* node);
 	
 };

@@ -4,9 +4,9 @@
 #include <fstream>
 using namespace std;
 
-TxtFile::TxtFile(string nam, Node* parent, string ext) : File(nam, parent, ext), lineCount(0), lineCap(10) {
+TxtFile::TxtFile(string nam, Node* parent, string fullpath) : File(nam, parent, fullpath,".txt"), lineCount(0), lineCap(10) {
 	lines = new string[lineCap];
-	ifstream file("root/" + nam + ext);
+	ifstream file(fullpath);
 	if (file.is_open())
 	{
 		string line;
@@ -24,8 +24,7 @@ TxtFile::~TxtFile() {
 }
 
 void TxtFile::save() {
-	string path = "root/" + name + ext;
-	ofstream file(path);
+	ofstream file(fullPath);
 	for (int i = 0; i < lineCount; i++) {
 		file << lines[i] << endl;
 	}
@@ -33,8 +32,7 @@ void TxtFile::save() {
 }
 
 void TxtFile::open() {
-	string pathopen = "root/" + name + ext;
-	ifstream file(pathopen);
+	ifstream file(fullPath);
 	string line;
 	while (getline(file, line)) {		// file means it keeps copying till it hits "\n" and then goes to the next line
 		if (lineCount == lineCap) {
@@ -108,7 +106,7 @@ void TxtFile::open() {
 
 void TxtFile::remove() {
 	string dir = ("root/" + name + ext);
-	::remove(dir.c_str());			// bcs remove only takes in char arr not strings
+	::remove(fullPath.c_str());// bcs remove only takes in char arr not strings
 	isDeleted = true;
 }									// :: bcs there is another remove() in Folder.cpp
 
