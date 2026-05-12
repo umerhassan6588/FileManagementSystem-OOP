@@ -3,10 +3,10 @@
 #include <string>
 using namespace std;
 
-pvtFile::pvtFile(string nam, Node* parent) : TxtFile(nam, parent, ".priv") {
+pvtFile::pvtFile(string nam, Node* parent,string fullpath) : TxtFile(nam, parent,fullPath) {
 
 }
-pvtFile::pvtFile(string nam, Node* parent,string password) : TxtFile(nam, parent, ".priv") {
+pvtFile::pvtFile(string nam, Node* parent,string password,string fullpath) : TxtFile(nam, parent,fullpath) {
 	pass = password;
 }
 void pvtFile::open() {

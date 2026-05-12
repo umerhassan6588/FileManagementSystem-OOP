@@ -275,16 +275,16 @@ void CommandManager::touch(string type, string name) {//create file of any type
 			}
 		}
 	}
-	string fullPath = basePath + currentFolder->getPath() + "/" + name;
+	string fullPath = basePath + currentFolder->getPath() + "/" + name + "." + type;
 	File* newFile = nullptr;
 	if (type == "txt") {
-		newFile = new TxtFile(name, currentFolder);
+		newFile = new TxtFile(name, currentFolder, fullPath);
 	}
 	else if (type == "mpg") {
-		newFile = new AudioFile(name, currentFolder);
+		newFile = new AudioFile(name, currentFolder, fullPath);
 	}
 	else if (type == "priv") {
-		newFile = new pvtFile(name, currentFolder);
+		newFile = new pvtFile(name, currentFolder, fullPath);
 	}
 	else if (type == "zip") {
 		string nodeName;
@@ -295,7 +295,7 @@ void CommandManager::touch(string type, string name) {//create file of any type
 			if (mylist[i]->getName() == nodeName) {
 				File* fileNode = dynamic_cast<File*>(mylist[i]);
 				if (fileNode != nullptr) {
-					newFile = new ZipFile(name + "-zip", currentFolder, nodeName, fileNode->getExt());
+					newFile = new ZipFile(name + "-zip", currentFolder,fullPath);
 					break;
 				}
 				else
@@ -390,17 +390,18 @@ void CommandManager::load() {//used to load and create the nodes using the paths
 				continue;
 			}
 			Node* newNode = nullptr;
+			string fullPath = basePath + currentFolder->getPath() + "/" + name + "." + type;
 			if (type == "Folder")
 			{
 				newNode = new Folder(name, parent);
 			}
 			else if (type == "TxtFile")
 			{
-				newNode = new TxtFile(name, parent);
+				newNode = new TxtFile(name, parent, fullPath);
 			}
 			else if (type == "AudioFile")
 			{
-				newNode = new AudioFile(name, parent);
+				newNode = new AudioFile(name, parent, fullPath);
 			}
 			else if (type == "PrivateFile")
 			{
@@ -413,11 +414,11 @@ void CommandManager::load() {//used to load and create the nodes using the paths
 				if (parent == nullptr) {
 					continue; 
 				}
-				newNode = new pvtFile(name, parent,password);
+				newNode = new pvtFile(name, parent,password, fullPath);
 			}
 			else if (type == "ZipFile")
 			{
-				newNode = new ZipFile(name, parent, name, ".zip");
+				newNode = new ZipFile(name, parent, fullPath);
 			}
 			if (newNode != nullptr)
 			{

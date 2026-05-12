@@ -9,8 +9,8 @@ class pvtFile : public TxtFile {
 protected:
 	string pass;
 public:
-	pvtFile(string name, Node* parent);
-	pvtFile(string name, Node* parent, string password);
+	pvtFile(string name, Node* parent,string fullpath);
+	pvtFile(string name, Node* parent, string password,string fullpath);
 	void open() override;
 	void create() override;
 	void remove() override;

@@ -6,10 +6,9 @@ using namespace std;
 
 class ZipFile : public File {
 protected:
-	string originalName;
-	string originalExt;
+	string orignalFullpath;
 public:
-	ZipFile(string nam, Node* parent, string originalName, string originalExt);
+	ZipFile(string nam, Node* parent, string orignalFullpath);
 	void create() override;
 	void open() override;
 	void remove() override;

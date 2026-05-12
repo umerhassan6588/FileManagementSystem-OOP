@@ -3,36 +3,36 @@
 #include <iostream>
 using namespace std;
 
-ZipFile::ZipFile(string nam, Node* parent, string originalName, string originalExt) : File(nam, parent, ".zip") {
-	this->originalName = originalName;
-	this->originalExt = originalExt;
+ZipFile::ZipFile(string nam, Node* parent,string ogfullpath) : File(nam, parent,fullPath, ".zip") {
+	
+	this->orignalFullpath = ogfullpath;
 }
 void ZipFile::create() {
-	string cmd = "powershell Compress-Archive -Path root/" + originalName + originalExt + " -DestinationPath root/" + name + ".zip";
+	string cmd = "powershell Compress-Archive -Path" + orignalFullpath+ " -DestinationPath " + fullPath;
 	system(cmd.c_str());
 	cout << "The file has been zipped!\n";
 }
 void ZipFile::open() {
-	cout << "Zipped files cannot be opened, unzip first." << endl;
-	do
+	cout << "Zipped files cannot be opened directly.\n";
+
+	string inp;
+	cout << "Type 'unzip' to extract: ";
+	getline(cin, inp);
+
+	if (inp == "unzip")
 	{
-		string inp;
-		cout << "\nType in:\n";
-		cout << "1.\"unzip\" to unzip file\n";
-		getline(cin, inp);
 		unzip();
-	} while (true);
-	
-		
+	}
 }
 void ZipFile::unzip() {
-	string cmd = "powershell Expand-Archive -Path root/" + name + ".zip -DestinationPath root/" + originalName + "-unzipped";
+	string cmd = "powershell Expand-Archive -Path /" +fullPath + ".zip -DestinationPath " + orignalFullpath + "-unzipped";
 	system(cmd.c_str());
 	cout << "The file has been unzipped!\n";
 	return;
 }
 void ZipFile::remove() {
-	string path = "root/" + name + ".zip";
-	::remove(path.c_str());
-	isDeleted = true;
+	if (::remove(fullPath.c_str()) == 0)
+		isDeleted = true;
+	else
+		cout << "Failed to delete zip file.\n";
 }
