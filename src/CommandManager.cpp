@@ -341,6 +341,7 @@ void CommandManager::run() {
 	string option;
 	while (true)
 	{
+		
 		cout << "\nList of available commands:\n";
 		cout << "ls" << endl;
 		cout << "mkdir" << endl;
@@ -415,7 +416,7 @@ void CommandManager::run() {
 		}
 		else if (option == "exit")
 		{
-
+			save();
 			cout << "exitted succefully" << endl;
 			break;
 		}

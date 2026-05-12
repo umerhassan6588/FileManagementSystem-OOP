@@ -14,7 +14,7 @@ public:
 	void open() override;
 	void create() override;
 	void remove() override;
-	string getPass() override;
+	string getPass();
 	string getType() override {
 		return "PrivateFile";
 	}

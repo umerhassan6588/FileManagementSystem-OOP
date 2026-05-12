@@ -6,6 +6,21 @@ using namespace std;
 
 TxtFile::TxtFile(string nam, Node* parent, string ext) : File(nam, parent, ext), lineCount(0), lineCap(10) {
 	lines = new string[lineCap];
+	ifstream file("root/" + nam + ext);
+	if (file.is_open())
+	{
+		string line;
+		while (getline(file, line))
+		{
+			lineCount++;
+		}
+		file.close();
+	}
+	else
+	{
+		cout << "Error" << endl;
+	}
+	
 }
 TxtFile::~TxtFile() {
 	delete[] lines;
