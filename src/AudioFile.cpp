@@ -7,11 +7,11 @@ using namespace std;
 AudioFile::AudioFile(string nam, Node* parent) : File(nam, parent, ".mpg") { }
 void AudioFile::open() {
 	string cmd = "start root/" + name + ".mpg";			// opens the audio file with windows default audio player
-	system(cmd.c_str());
+	system(cmd.c_str());								// had to download and install ffmpeg
 }
 void AudioFile::create() {
 	cout << "Recording for 5 seconds...\n";
-	string cmd = "ffmpeg -f dshow -i audio=\"Microphone\" -t 5 root/" + name + ".mpg";
+	string cmd = "ffmpeg -f dshow -i audio=\"Microphone (Realtek(R) Audio)\" -t 5 root/" + name + ".mpg";
 	system(cmd.c_str());
 	cout << "Recording Completed!\n";
 }
