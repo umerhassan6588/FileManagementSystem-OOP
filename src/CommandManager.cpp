@@ -238,7 +238,7 @@ void CommandManager::saveHelper(Node* node, ofstream& file) {// a recursive func
 	pvtFile* Private = dynamic_cast<pvtFile*>(node);
 		if (Private != nullptr)
 		{
-			file << Private->getType() << "," << Private->getName() << "," << Private->getPath() << Private->getPass() << endl;
+			file << Private->getType() << "," << Private->getName() << "," << Private->getPath()<< "," << Private->getPass() << endl;
 		}
 		else
 		{
