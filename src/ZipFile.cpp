@@ -29,6 +29,7 @@ void ZipFile::unzip() {
 	string cmd = "powershell Expand-Archive -Path root/" + name + ".zip -DestinationPath root/" + originalName + "-unzipped";
 	system(cmd.c_str());
 	cout << "The file has been unzipped!\n";
+	return;
 }
 void ZipFile::remove() {
 	string path = "root/" + name + ".zip";
