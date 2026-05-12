@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Folder.h"
 #include "File.h"
 #include "TxtFile.h"
@@ -8,7 +9,10 @@
 #include <string>
 #include "CommandManager.h"
 #include <fstream>
+#include <cstdio>
+#include <cerrno>
 using namespace std;
+
 
 
 CommandManager::CommandManager(Folder* rootFolder) {
@@ -149,7 +153,7 @@ void CommandManager::rm(string name) {// used to delete a node.
 	}
 
 }
-void CommandManager::rename(string name,string newname) {//used to rename the opened node.
+void CommandManager::Rename(string name,string newname) {//used to rename the opened node.
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
 		return;
@@ -160,9 +164,48 @@ void CommandManager::rename(string name,string newname) {//used to rename the op
 	{
 		if (name == mylist[i]->getName())
 		{
-			mylist[i] ->setName(newname);
-			found = true;
-			break;
+			File* temp = dynamic_cast<File*>(mylist[i]);
+			if (temp != nullptr)
+			{
+				string oldpath = basePath + mylist[i]->getPath() + temp->getExt();
+				mylist[i]->setName(newname);
+				string newpath = basePath + mylist[i]->getPath() + temp->getExt();
+				cout << "OLD: " << oldpath << endl;
+				cout << "NEW: " << newpath << endl;
+				if (::rename(oldpath.c_str(), newpath.c_str()) != 0)
+				{
+					mylist[i]->setName(name);
+					cout << "Rename failed." << endl;
+					cout << "Error: " << strerror(errno) << endl;
+				}
+				else
+				{
+					cout << "Renamed successfully." << endl;
+				}
+				found = true;
+				break;
+			}
+			else
+			{
+				string oldpath = basePath + mylist[i]->getPath();
+				mylist[i]->setName(newname);
+				string newpath = basePath + mylist[i]->getPath();
+				cout << "OLD: " << oldpath << endl;
+				cout << "NEW: " << newpath << endl;
+				if (::rename(oldpath.c_str(), newpath.c_str()) != 0)
+				{
+					mylist[i]->setName(name);
+					cout << "Rename failed." << endl;
+					cout << "Error: " << strerror(errno) << endl;
+				}
+				else
+				{
+					cout << "Renamed successfully." << endl;
+				}
+				found = true;
+				break;
+			}
+			
 		}
 	}
 	if (found == false)
@@ -408,7 +451,7 @@ void CommandManager::run() {//main run function to use all commands.
 			getline(cin, name);
 			cout << "enter the new name:";
 			getline(cin, newname);
-			rename(name, newname);
+			Rename(name, newname);
 		}
 		else if (option == "touch")
 		{

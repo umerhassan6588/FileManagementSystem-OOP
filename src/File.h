@@ -17,7 +17,7 @@ public:
 	virtual int getSize() {
 		return 0;
 	}
-	string getExt() {
+	virtual string getExt() {
 		return ext;
 	}
 };

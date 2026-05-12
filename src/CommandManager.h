@@ -14,6 +14,7 @@ class CommandManager
 	Folder* currentFolder;
 	Folder* rootFolder;
 public:
+	string basePath = "C:/Users/Hamiz/Desktop/projetest/projetest/";
 	CommandManager(Folder* rootFolder);
 	void searchHelper(Node* node, string name);
 	void ls();
@@ -21,7 +22,7 @@ public:
 	void cd(string name);
 	void search(string name);
 	void rm(string name);
-	void rename(string name, string newname);
+	void Rename(string name, string newname);
 	void touch(string type, string name);
 	void saveHelper(Node* node, ofstream& file);
 	void save();
