@@ -105,12 +105,12 @@ void TxtFile::open() {
 }
 
 void TxtFile::remove() {
-	string dir = ("root/" + name + ext);
+	string dir = (fullPath);
 	::remove(fullPath.c_str());// bcs remove only takes in char arr not strings
 	isDeleted = true;
 }									// :: bcs there is another remove() in Folder.cpp
 
 void TxtFile::create() {
-	ofstream file("root/" + name + ext);		// name from node class. TxtFile -> File -> Node
+	ofstream file(fullPath);		// name from node class. TxtFile -> File -> Node
 	file.close();
 }

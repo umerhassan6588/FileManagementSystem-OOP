@@ -8,7 +8,7 @@ class ZipFile : public File {
 protected:
 	string orignalFullpath;
 public:
-	ZipFile(string nam, Node* parent, string orignalFullpath);
+	ZipFile(string nam, Node* parent, string sourcePath,string destPath);
 	void create() override;
 	void open() override;
 	void remove() override;
@@ -16,6 +16,7 @@ public:
 	string getType() override {
 		return "ZipFile";
 	}
+	string getSourcePath() { return orignalFullpath; }
 	int getSize() override {
 		return 0;
 	}

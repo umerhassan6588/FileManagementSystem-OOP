@@ -154,7 +154,7 @@ void CommandManager::deleteRecursively(Node* node) {
 	else
 	{
 		File* file = dynamic_cast<File*>(node);
-		string fullPath = basePath + node->getPath() + file->getExt()  ;
+		string fullPath = file->getFullPath();
 		if (::remove(fullPath.c_str()) != 0)
 		{
 			cout << "Failed to delete file: " << fullPath << endl;
@@ -295,7 +295,9 @@ void CommandManager::touch(string type, string name) {//create file of any type
 			if (mylist[i]->getName() == nodeName) {
 				File* fileNode = dynamic_cast<File*>(mylist[i]);
 				if (fileNode != nullptr) {
-					newFile = new ZipFile(name + "-zip", currentFolder,fullPath);
+					string sourcePath = basePath + fileNode->getPath() + fileNode->getExt(); 
+					string destPath = basePath + currentFolder->getPath() + "/" + name + ".zip"; 
+					newFile = new ZipFile(name + "-zip", currentFolder, sourcePath, destPath);
 					break;
 				}
 				else
@@ -316,17 +318,23 @@ void CommandManager::touch(string type, string name) {//create file of any type
 	}
 }
 void CommandManager::saveHelper(Node* node, ofstream& file) {// a recursive function to save the paths of the nodes in a file.
-	
+	ZipFile* zip = dynamic_cast<ZipFile*>(node);
 	pvtFile* Private = dynamic_cast<pvtFile*>(node);
-		if (Private != nullptr)
-		{
-			file << Private->getType() << "," << Private->getName() << "," << Private->getPath()<< "," << Private->getPass() << endl;
-		}
-		else
-		{
-			file << node->getType() << "," << node->getName() << "," << node->getPath() << endl;
-		}
 	Folder* isFolder = dynamic_cast<Folder*>(node);
+	if (zip != nullptr) {
+		file << zip->getType() << "," << zip->getName() << "," << zip->getPath() << "," << zip->getSourcePath() << endl;
+	}
+	else if (Private != nullptr)
+	{
+		file << Private->getType() << "," << Private->getName() << "," << Private->getPath() << "," << Private->getPass() << endl;
+	
+	}
+	else
+	{
+		file << node->getType() << "," << node->getName() << "," << node->getPath() << endl;
+
+	}
+			
 	if (isFolder != nullptr)
 	{
 		for (int i = 0; i < isFolder->getCount(); i++) {
@@ -389,8 +397,8 @@ void CommandManager::load() {//used to load and create the nodes using the paths
 			if (parent == nullptr) {
 				continue;
 			}
-			Node* newNode = nullptr;
-			string fullPath = basePath + currentFolder->getPath() + "/" + name + "." + type;
+			Node* newNode = nullptr; 
+			string fullPath = basePath + path + "." + type;
 			if (type == "Folder")
 			{
 				newNode = new Folder(name, parent);
@@ -418,7 +426,11 @@ void CommandManager::load() {//used to load and create the nodes using the paths
 			}
 			else if (type == "ZipFile")
 			{
-				newNode = new ZipFile(name, parent, fullPath);
+				int thirdComma = line.find(',', secondComma + 1);
+				string destPath = line.substr(secondComma + 1, thirdComma - secondComma - 1);
+				string sourcePath = line.substr(thirdComma + 1);
+				string fullDestPath = basePath + destPath + ".zip";
+				newNode = new ZipFile(name, parent, sourcePath, fullDestPath);
 			}
 			if (newNode != nullptr)
 			{

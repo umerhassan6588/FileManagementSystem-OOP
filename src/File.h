@@ -21,4 +21,7 @@ public:
 	virtual string getExt() {
 		return ext;
 	}
+	string getFullPath() { 
+		return fullPath; 
+	}
 };
