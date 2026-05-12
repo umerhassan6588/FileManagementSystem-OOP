@@ -16,10 +16,7 @@ TxtFile::TxtFile(string nam, Node* parent, string ext) : File(nam, parent, ext),
 		}
 		file.close();
 	}
-	else
-	{
-		cout << "Error" << endl;
-	}
+	
 	
 }
 TxtFile::~TxtFile() {

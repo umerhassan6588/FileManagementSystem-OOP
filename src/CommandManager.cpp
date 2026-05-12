@@ -23,6 +23,8 @@ void CommandManager::searchHelper(Node* node, string name) {
 	    if (name == node->getName())
 			{
 				cout << node->getPath() << endl;
+				cout << "Searched Successfully." << endl;
+				return;
 			}
 	}
 	else
@@ -30,6 +32,7 @@ void CommandManager::searchHelper(Node* node, string name) {
 		if (name == isFolder->getName())
 		{
 			cout << isFolder->getPath() << endl;
+			cout << "Searched Successfully." << endl;
 		}
 		Node** mylist = isFolder->getList();
 		for (int i = 0; i < isFolder->getCount(); i++)
@@ -60,6 +63,7 @@ void CommandManager::mkdir(string name) {
 	}
 	Folder* newFolder = new Folder(name, currentFolder);
 	currentFolder->addNode(newFolder);
+	cout << "Folder created Successfully." << endl;
 }
 void CommandManager::cd(string name) {
 	if (name == "" || name[0] == ' ') {
@@ -131,9 +135,10 @@ void CommandManager::rm(string name) {
 			{
 				currentFolder->removeNode(toDelete);
 				delete toDelete;
-				
+				cout << "removed Successfully" << endl;
 			}
 			found = true;
+			
 			break;
 		}
 	}
