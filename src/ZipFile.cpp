@@ -14,6 +14,16 @@ void ZipFile::create() {
 }
 void ZipFile::open() {
 	cout << "Zipped files cannot be opened, unzip first." << endl;
+	do
+	{
+		string inp;
+		cout << "\nType in:\n";
+		cout << "1.\"unzip\" to unzip file\n";
+		getline(cin, inp);
+		unzip();
+	} while (true);
+	
+		
 }
 void ZipFile::unzip() {
 	string cmd = "powershell Expand-Archive -Path root/" + name + ".zip -DestinationPath root/" + originalName + "-unzipped";
