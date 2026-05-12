@@ -118,6 +118,7 @@ void CommandManager::search(string name){
 		searchHelper(mylist[i], name);
 	}
 }
+
 void CommandManager::rm(string name) {
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
@@ -319,14 +320,17 @@ void CommandManager::load() {
 			{
 				newNode = new AudioFile(name, parent);
 			}
-			else if ("PrivateFile")
+			else if (type == "PrivateFile")
 			{
 				int thirdComma = line.find(',', secondComma + 1);
 				string cleanPath = line.substr(secondComma + 1, thirdComma - secondComma - 1);
 				string password = line.substr(thirdComma + 1);
 				int ls = cleanPath.find_last_of('/');
 				string ppath = cleanPath.substr(0, ls);
-				parent = findFolder(rootFolder, parentPath);
+				parent = findFolder(rootFolder, ppath);
+				if (parent == nullptr) {
+					continue; 
+				}
 				newNode = new pvtFile(name, parent,password);
 			}
 			else if (type == "ZipFile")

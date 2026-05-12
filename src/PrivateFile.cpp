@@ -37,6 +37,8 @@ void pvtFile::remove() {
 		while (true) {
 			cout << "Are you sure you want to delete? press y to confirm and n to exit: ";
 			cin >> inp1;
+			cin.clear();
+			cin.ignore(1000, '\n');
 			if (inp1 == 'y' || inp1 == 'Y') {
 				TxtFile::remove();
 				isDeleted = true;
