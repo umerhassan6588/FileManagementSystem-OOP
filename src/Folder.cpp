@@ -22,7 +22,7 @@ void Folder::open() { cout << "Opened: " << getName() << endl; }
 
 void Folder::create() { cout << "Created: " << getName() << endl; }
 
-void Folder::remove() {
+void Folder::remove() {//delete the pointer.
 		cout << "Removed: " << getName() << endl;
 		for (int i = 0; i < count; i++)
 		{
@@ -47,7 +47,7 @@ Node** Folder::getList() {
 		return list;
 }
 
-void Folder::addNode(Node* newnode) {
+void Folder::addNode(Node* newnode) {//add the node by creating a temp array increasing size and pointing to it.
 		Node** temp = new Node * [count + 1];
 		for (int i = 0; i < count; i++)
 		{
@@ -58,7 +58,7 @@ void Folder::addNode(Node* newnode) {
 		list = temp;
 		count++;
 }
-void Folder::removeNode(Node* oldnode) {
+void Folder::removeNode(Node* oldnode) {//remove node from the node** array.
 		Node** temp = new Node * [count - 1];
 		int j = 0;
 		for (int i = 0; i < count; i++)

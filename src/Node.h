@@ -24,7 +24,7 @@ public:
 	Node* getPreviousNode() {
 		return prev;
 	}
-	string getPath() {
+	string getPath() {//recursive function to get path of node.
 		string path = "";
 		
 		if (prev != nullptr)

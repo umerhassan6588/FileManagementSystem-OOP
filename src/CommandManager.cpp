@@ -16,7 +16,7 @@ CommandManager::CommandManager(Folder* rootFolder) {
 		this ->rootFolder = rootFolder;
 		load();
 }
-void CommandManager::searchHelper(Node* node, string name) {
+void CommandManager::searchHelper(Node* node, string name) {  // a recursive function used in search. To search for the specified nodes path.
 	Folder* isFolder = dynamic_cast<Folder*>(node);
 	if (isFolder == nullptr)
 	{
@@ -41,7 +41,7 @@ void CommandManager::searchHelper(Node* node, string name) {
 		}
 	}
 }
-void CommandManager::ls() {
+void CommandManager::ls() {  // list all the nods in the current folder/path.
 	Node** mylist = currentFolder->getList();
 	for (int i = 0; i < currentFolder->getCount(); i++)
 	{
@@ -49,7 +49,7 @@ void CommandManager::ls() {
 	}
 }
 
-void CommandManager::mkdir(string name) {
+void CommandManager::mkdir(string name) {// creates a folder.
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
 		return;
@@ -65,7 +65,7 @@ void CommandManager::mkdir(string name) {
 	currentFolder->addNode(newFolder);
 	cout << "Folder created Successfully." << endl;
 }
-void CommandManager::cd(string name) {
+void CommandManager::cd(string name) { //opens the nodes in the current folder
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
 		return;
@@ -107,7 +107,7 @@ void CommandManager::cd(string name) {
 		cout << "not found" << endl;
 	}
 }
-void CommandManager::search(string name){
+void CommandManager::search(string name){// used to search for required node and print its path.
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
 		return;
@@ -119,7 +119,7 @@ void CommandManager::search(string name){
 	}
 }
 
-void CommandManager::rm(string name) {
+void CommandManager::rm(string name) {// used to delete a node.
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
 		return;
@@ -149,7 +149,7 @@ void CommandManager::rm(string name) {
 	}
 
 }
-void CommandManager::rename(string name,string newname) {
+void CommandManager::rename(string name,string newname) {//used to rename the opened node.
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
 		return;
@@ -171,7 +171,7 @@ void CommandManager::rename(string name,string newname) {
 	}
 }
 
-void CommandManager::touch(string type, string name) {
+void CommandManager::touch(string type, string name) {//create file of any type
 	if (name == "" || name[0] == ' ') {
 		cout << "Invalid name." << endl;
 		return;
@@ -233,7 +233,7 @@ void CommandManager::touch(string type, string name) {
 		currentFolder->addNode(newFile);
 	}
 }
-void CommandManager::saveHelper(Node* node, ofstream& file) {
+void CommandManager::saveHelper(Node* node, ofstream& file) {// a recursive function to save the paths of the nodes in a file.
 	
 	pvtFile* Private = dynamic_cast<pvtFile*>(node);
 		if (Private != nullptr)
@@ -252,7 +252,7 @@ void CommandManager::saveHelper(Node* node, ofstream& file) {
 		}
 	}
 }
-void CommandManager::save() {
+void CommandManager::save() {//used to save the paths in the file with the help of saveHelper
 	ofstream file("save.txt");
 	if (file.is_open())
 	{
@@ -268,7 +268,7 @@ void CommandManager::save() {
 		cout << "Error file did not open" << endl;
 	}
 }
-Folder* CommandManager::findFolder(Node* node, string path) {
+Folder* CommandManager::findFolder(Node* node, string path) {//recursive function used to find the folder or file to create
 	Folder* isFolder = dynamic_cast<Folder*>(node);
 	if (isFolder == nullptr) {
 		return nullptr;
@@ -290,7 +290,7 @@ Folder* CommandManager::findFolder(Node* node, string path) {
 	return nullptr;
 }
 
-void CommandManager::load() {
+void CommandManager::load() {//used to load and create the nodes using the paths saved in the file.
 	ifstream file("save.txt");
 	if (file.is_open())
 	{
@@ -346,7 +346,7 @@ void CommandManager::load() {
 	file.close();
 }
 
-void CommandManager::run() {
+void CommandManager::run() {//main run function to use all commands.
 	string option;
 	while (true)
 	{
